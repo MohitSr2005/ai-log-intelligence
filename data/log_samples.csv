@@ -1,0 +1,7 @@
+log_text,label
+"Database connection refused on port 5432",database_error
+"JWT token expired for user request",auth_error
+"504 Gateway Timeout from nginx server",timeout_error
+"ModuleNotFoundError: No module named numpy",dependency_error
+"Environment variable SECRET_KEY missing",config_error
+"500 Internal Server Error at /login endpoint",api_error
