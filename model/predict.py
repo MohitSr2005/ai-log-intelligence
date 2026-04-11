@@ -1,9 +1,16 @@
+from email.mime import text
+
 import joblib
 
 pipeline = joblib.load("model/log_classifier.pkl")
 
 def classify_log(log_text: str):
     text = log_text.lower()
+    if "no module named" in text or "importerror" in text:
+        return {"issue_type": "dependency_error", "confidence": 0.9}
+
+    if "secret_key" in text or "env" in text:
+        return {"issue_type": "config_error", "confidence": 0.9}
 
     if "database" in text or "connection refused" in text:
         return {"issue_type": "database_error", "confidence": 0.9}
