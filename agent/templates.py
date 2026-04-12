@@ -1,24 +1,25 @@
 FIX_SUGGESTIONS = {
-    "database_error": {
-        "root_cause": "Database server may be down, unreachable, or configured incorrectly",
-        "suggested_fix": "Check DB host, port, credentials, and whether the database service is running"
-    },
     "auth_error": {
-        "root_cause": "Authentication token is invalid, missing, or expired",
-        "suggested_fix": "Check token generation, token expiry, and authorization headers"
+        "root_cause": "JWT or token authentication failed.",
+        "suggested_fix": "Check token expiry, secret key, and authentication flow."
+    },
+    "database_error": {
+        "root_cause": "Database connection failed or database service is unreachable.",
+        "suggested_fix": "Verify database host, port, credentials, and server status."
     },
     "timeout_error": {
-        "root_cause": "The service took too long to respond",
-        "suggested_fix": "Check network latency, server load, and timeout configuration"
+        "root_cause": "The request or service exceeded the allowed timeout.",
+        "suggested_fix": "Check server load, optimize queries, and increase timeout if needed."
     },
-    "dependency_error": {
-        "root_cause": "A required library or module is missing or incompatible",
-        "suggested_fix": "Install missing dependencies and verify package versions"
+    "server_error": {
+        "root_cause": "Internal server failure occurred while processing the request.",
+        "suggested_fix": "Inspect backend logs, stack traces, and dependent services."
     },
-    "config_error": {
-        "root_cause": "Required configuration or environment variables are missing or incorrect",
-        "suggested_fix": "Check environment variables, secrets, and configuration files"
+    "unknown": {
+        "root_cause": "Log pattern was not recognized by the model.",
+        "suggested_fix": "Inspect logs manually and add more training samples for this issue."
     },
+<<<<<<< HEAD
     "api_error": {
         "root_cause": "Server-side route or application logic failed",
         "suggested_fix": "Inspect stack trace, route handler logic, and backend logs"
@@ -34,5 +35,10 @@ FIX_SUGGESTIONS = {
     "unknown": {
         "root_cause": "Log pattern not recognized.",
         "suggested_fix": "Check logs manually or improve training dataset."
+=======
+    "uncertain": {
+    "root_cause": "The system could not determine the issue with enough confidence.",
+    "suggested_fix": "Provide more detailed logs or additional context."
+>>>>>>> 38d73d0 (fixed nested repo issue + added AI improvements)
 }
 }
