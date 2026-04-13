@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Log Intelligence</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-badge">AI Powered Log Analysis</div>
+      <h1>AI Log Intelligence</h1>
+      <p>
+        Detect issue type, confidence, root cause, suggested fix, and reasoning
+        from single or batch logs.
+      </p>
+    </header>
+
+    <main class="grid">
+      <section class="card">
+        <div class="section-top">
+          <div>
+            <h2>Single Log Analysis</h2>
+            <p>Analyze one log at a time</p>
+          </div>
+          <span class="pill">POST /analyze</span>
+        </div>
+
+        <textarea id="singleLog" placeholder="Paste one log here..."></textarea>
+
+        <div class="actions">
+          <button id="analyzeSingleBtn" class="btn btn-primary">Analyze Log</button>
+          <button id="clearSingleBtn" class="btn btn-secondary">Clear</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="section-top">
+          <div>
+            <h2>Batch Log Analysis</h2>
+            <p>Paste multiple logs, one per line</p>
+          </div>
+          <span class="pill">POST /analyze-batch</span>
+        </div>
+
+        <textarea id="batchLogs" placeholder="Paste multiple logs, one per line..."></textarea>
+
+        <div class="actions">
+          <button id="analyzeBatchBtn" class="btn btn-primary">Analyze Batch</button>
+          <button id="clearBatchBtn" class="btn btn-secondary">Clear</button>
+        </div>
+      </section>
+
+      <section class="card result-card">
+        <div class="section-top">
+          <div>
+            <h2>Analysis Result</h2>
+            <p>Output from backend prediction</p>
+          </div>
+          <span id="statusBadge" class="status idle">Waiting</span>
+        </div>
+
+        <div id="resultBox" class="result-box">
+          <div class="empty">
+            <div class="empty-icon">✨</div>
+            <h3>No result yet</h3>
+            <p>Run an analysis to see results here.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
