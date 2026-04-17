@@ -11,14 +11,14 @@ logging.basicConfig(level=logging.INFO)
 
 app = FastAPI(title="AI Log Intelligence API")
 
-# ✅ ADD THIS BLOCK (VERY IMPORTANT)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # allow frontend (localhost:5501)
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 class BatchLogRequest(BaseModel):
     logs: list[str]
@@ -26,9 +26,7 @@ class BatchLogRequest(BaseModel):
 
 @app.get("/")
 def home():
-    return {
-        "message": "AI Log Intelligence API is running"
-    }
+    return {"message": "AI Log Intelligence API is running"}
 
 
 @app.post("/analyze")
@@ -55,6 +53,9 @@ async def analyze_log_api(
     try:
         result = analyze_log(content)
 
+        if result.get("confidence", 0) < 0.60:
+            result["issue_type"] = "uncertain"
+
         return {
             "status": "success",
             "data": result
@@ -62,7 +63,6 @@ async def analyze_log_api(
 
     except Exception as e:
         logging.error(f"Error occurred: {str(e)}")
-
         return {
             "status": "error",
             "message": "Internal server error"
@@ -73,15 +73,15 @@ async def analyze_log_api(
 async def analyze_batch_logs(request: BatchLogRequest):
     logging.info("Request received for batch log analysis")
 
-    if not request.logs or not any(log.strip() for log in request.logs):
+    valid_logs = [log for log in request.logs if log and log.strip()]
+    if not valid_logs:
         return {
             "status": "error",
             "message": "No logs provided"
         }
 
     try:
-        result = analyze_logs(request.logs)
-
+        result = analyze_logs(valid_logs)
         return {
             "status": "success",
             "data": result
@@ -89,7 +89,6 @@ async def analyze_batch_logs(request: BatchLogRequest):
 
     except Exception as e:
         logging.error(f"Batch error occurred: {str(e)}")
-
         return {
             "status": "error",
             "message": "Internal server error"
