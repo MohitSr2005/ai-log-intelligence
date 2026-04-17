@@ -2,6 +2,7 @@ import logging
 from typing import Optional
 
 from fastapi import FastAPI, File, Form, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 
 from agent.analyzer import analyze_log, analyze_logs
@@ -10,6 +11,14 @@ logging.basicConfig(level=logging.INFO)
 
 app = FastAPI(title="AI Log Intelligence API")
 
+# ✅ ADD THIS BLOCK (VERY IMPORTANT)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow frontend (localhost:5501)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class BatchLogRequest(BaseModel):
     logs: list[str]
@@ -44,11 +53,7 @@ async def analyze_log_api(
         }
 
     try:
-        logging.info(f"Processing log: {content}")
-
         result = analyze_log(content)
-
-        logging.info(f"Result: {result}")
 
         return {
             "status": "success",
@@ -69,18 +74,13 @@ async def analyze_batch_logs(request: BatchLogRequest):
     logging.info("Request received for batch log analysis")
 
     if not request.logs or not any(log.strip() for log in request.logs):
-        logging.warning("Empty batch logs received")
         return {
             "status": "error",
             "message": "No logs provided"
         }
 
     try:
-        logging.info(f"Processing batch logs: {request.logs}")
-
         result = analyze_logs(request.logs)
-
-        logging.info(f"Batch result: {result}")
 
         return {
             "status": "success",

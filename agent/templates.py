@@ -19,7 +19,7 @@ FIX_SUGGESTIONS = {
         "root_cause": "Log pattern was not recognized by the model.",
         "suggested_fix": "Inspect logs manually and add more training samples for this issue."
     },
-<<<<<<< HEAD
+
     "api_error": {
         "root_cause": "Server-side route or application logic failed",
         "suggested_fix": "Inspect stack trace, route handler logic, and backend logs"
@@ -35,10 +35,10 @@ FIX_SUGGESTIONS = {
     "unknown": {
         "root_cause": "Log pattern not recognized.",
         "suggested_fix": "Check logs manually or improve training dataset."
-=======
+    },
     "uncertain": {
     "root_cause": "The system could not determine the issue with enough confidence.",
     "suggested_fix": "Provide more detailed logs or additional context."
->>>>>>> 38d73d0 (fixed nested repo issue + added AI improvements)
+
 }
 }
