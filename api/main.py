@@ -28,7 +28,32 @@ class BatchLogRequest(BaseModel):
 def home():
     return {"message": "AI Log Intelligence API is running"}
 
+@app.get("/dashboard")
+def dashboard():
+    sample_logs = [
+        "Database connection refused",
+        "JWT token expired",
+        "Request timeout",
+        "No module named sklearn"
+    ]
 
+    results = [analyze_log(log) for log in sample_logs]
+
+    return {
+        "total_events": len(sample_logs),
+        "anomalies_detected": sum(1 for r in results if r["issue_type"] != "unknown"),
+        "ai_patterns_found": len(set(r["issue_type"] for r in results)),
+        "avg_response_time": "120ms",
+        "status": "online"
+    }
+
+@app.get("/logs")
+def get_logs():
+    return [
+        "INFO: Server started",
+        "ERROR: Database timeout",
+        "WARNING: Token expired"
+    ]
 @app.post("/analyze")
 async def analyze_log_api(
     log_text: Optional[str] = Form(None),
