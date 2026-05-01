@@ -3,74 +3,133 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Log Intelligence</title>
+  <title>LogMind AI — Intelligent Log Analysis</title>
   <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
 </head>
+
 <body>
-  <div class="page">
-    <header class="hero">
-      <div class="hero-badge">AI Powered Log Analysis</div>
-      <h1>AI Log Intelligence</h1>
-      <p>
-        Detect issue type, confidence, root cause, suggested fix, and reasoning
-        from single or batch logs.
-      </p>
+  <div class="bg-orb orb-1"></div>
+  <div class="bg-orb orb-2"></div>
+  <div class="grid-overlay"></div>
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">LogMind</span>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a href="#" class="nav-item active" data-section="dashboard">◈ Dashboard</a>
+      <a href="#" class="nav-item" data-section="logs">≡ Live Logs</a>
+      <a href="#" class="nav-item" data-section="anomalies">⚠ Anomalies</a>
+      <a href="#" class="nav-item" data-section="patterns">◎ Patterns</a>
+      <a href="#" class="nav-item" data-section="alerts">⏚ Alerts</a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="system-status">
+        <span class="status-dot pulse"></span>
+        <span>System Online</span>
+      </div>
+      <div class="version-tag">v2.4.1</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="breadcrumb">
+        <span class="crumb-dim">LogMind</span>
+        <span>/</span>
+        <span class="crumb-active">Dashboard</span>
+      </div>
+
+      <div class="topbar-right">
+        <input id="globalSearch" class="search-input" type="text" placeholder="Search logs, events, patterns..." />
+        <button class="icon-btn">🔔</button>
+        <div class="avatar">S</div>
+      </div>
     </header>
 
-    <main class="grid">
-      <section class="card">
-        <div class="section-top">
-          <div>
-            <h2>Single Log Analysis</h2>
-            <p>Analyze one log at a time</p>
+    <section class="section active" id="section-dashboard">
+      <div class="section-header">
+        <div>
+          <h1 class="section-title">Overview</h1>
+          <p class="section-sub">Real-time intelligence across all log streams</p>
+        </div>
+
+        <button class="btn-primary" id="runAnalysisBtn">⚡ Run Analysis</button>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-label">Total Events</span>
+          <div class="stat-value" id="totalEvents">0</div>
+          <div class="stat-delta up">▲ Live from backend</div>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Anomalies Detected</span>
+          <div class="stat-value" id="anomalies">0</div>
+          <div class="stat-delta down">▼ Critical issues</div>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">AI Patterns Found</span>
+          <div class="stat-value" id="patterns">0</div>
+          <div class="stat-delta up">▲ AI detections</div>
+        </div>
+
+        <div class="stat-card">
+          <span class="stat-label">Avg Response Time</span>
+          <div class="stat-value" id="responseTime">0ms</div>
+          <div class="stat-delta up">▲ Backend latency</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="card wide">
+          <div class="card-header">
+            <span class="card-title">Single Log Analysis</span>
           </div>
-          <span class="pill">POST /analyze</span>
-        </div>
 
-        <textarea id="singleLog" placeholder="Paste one log here..."></textarea>
+          <textarea id="singleLog" placeholder="Paste one log here..."></textarea>
 
-        <div class="actions">
-          <button id="analyzeSingleBtn" class="btn btn-primary">Analyze Log</button>
-          <button id="clearSingleBtn" class="btn btn-secondary">Clear</button>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="section-top">
-          <div>
-            <h2>Batch Log Analysis</h2>
-            <p>Paste multiple logs, one per line</p>
+          <div class="btn-row">
+            <button class="btn-primary" id="analyzeSingleBtn">Analyze Log</button>
+            <button class="btn-outline" id="clearSingleBtn">Clear</button>
           </div>
-          <span class="pill">POST /analyze-batch</span>
         </div>
 
-        <textarea id="batchLogs" placeholder="Paste multiple logs, one per line..."></textarea>
-
-        <div class="actions">
-          <button id="analyzeBatchBtn" class="btn btn-primary">Analyze Batch</button>
-          <button id="clearBatchBtn" class="btn btn-secondary">Clear</button>
-        </div>
-      </section>
-
-      <section class="card result-card">
-        <div class="section-top">
-          <div>
-            <h2>Analysis Result</h2>
-            <p>Output from backend prediction</p>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">Batch Log Analysis</span>
           </div>
-          <span id="statusBadge" class="status idle">Waiting</span>
+
+          <textarea id="batchLogs" placeholder="Paste multiple logs, one per line..."></textarea>
+
+          <div class="btn-row">
+            <button class="btn-primary" id="analyzeBatchBtn">Analyze Batch</button>
+            <button class="btn-outline" id="clearBatchBtn">Clear</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card result-card">
+        <div class="card-header">
+          <span class="card-title">Analysis Result</span>
+          <span class="status idle" id="statusBadge">Waiting</span>
         </div>
 
-        <div id="resultBox" class="result-box">
+        <div id="resultBox">
           <div class="empty">
-            <div class="empty-icon">✨</div>
             <h3>No result yet</h3>
-            <p>Run an analysis to see results here.</p>
+            <p>Run an analysis to see backend prediction here.</p>
           </div>
         </div>
-      </section>
-    </main>
-  </div>
+      </div>
+    </section>
+  </main>
 
   <script src="script.js"></script>
 </body>

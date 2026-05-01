@@ -7,9 +7,15 @@ const analyzeSingleBtn = document.getElementById("analyzeSingleBtn");
 const analyzeBatchBtn = document.getElementById("analyzeBatchBtn");
 const clearSingleBtn = document.getElementById("clearSingleBtn");
 const clearBatchBtn = document.getElementById("clearBatchBtn");
+const runAnalysisBtn = document.getElementById("runAnalysisBtn");
 
 const resultBox = document.getElementById("resultBox");
 const statusBadge = document.getElementById("statusBadge");
+
+const totalEvents = document.getElementById("totalEvents");
+const anomalies = document.getElementById("anomalies");
+const patterns = document.getElementById("patterns");
+const responseTime = document.getElementById("responseTime");
 
 function setStatus(type, text) {
   statusBadge.className = `status ${type}`;
@@ -27,11 +33,8 @@ function showEmpty() {
   setStatus("idle", "Waiting");
   resultBox.innerHTML = `
     <div class="empty">
-      <div>
-        <div class="empty-icon">✨</div>
-        <h3>No result yet</h3>
-        <p>Run an analysis to see results here.</p>
-      </div>
+      <h3>No result yet</h3>
+      <p>Run an analysis to see backend prediction here.</p>
     </div>
   `;
 }
@@ -60,33 +63,41 @@ function showResult(data) {
   const confidence = ((data.confidence || 0) * 100).toFixed(2);
 
   resultBox.innerHTML = `
-    <div class="result-grid">
-      <div class="result-item">
-        <span class="label">Issue Type</span>
-        <div class="value issue">${data.issue_type || "N/A"}</div>
+    <div class="result-card">
+      <h2 class="issue-type">${data.issue_type || "Unknown"}</h2>
+
+      <p><b>Confidence:</b> ${confidence}%</p>
+
+      <div class="result-section">
+        <h4>Root Cause</h4>
+        <p>${data.root_cause || "N/A"}</p>
       </div>
 
-      <div class="result-item">
-        <span class="label">Confidence</span>
-        <div class="value">${confidence}%</div>
+      <div class="result-section">
+        <h4>Suggested Fix</h4>
+        <p>${data.suggested_fix || "N/A"}</p>
       </div>
 
-      <div class="result-item full">
-        <span class="label">Root Cause</span>
-        <div class="value">${data.root_cause || "N/A"}</div>
-      </div>
-
-      <div class="result-item full">
-        <span class="label">Suggested Fix</span>
-        <div class="value fix">${data.suggested_fix || "N/A"}</div>
-      </div>
-
-      <div class="result-item full">
-        <span class="label">Reasoning</span>
-        <div class="value reasoning">${data.reasoning || "N/A"}</div>
+      <div class="result-section">
+        <h4>Reasoning</h4>
+        <p>${data.reasoning || "N/A"}</p>
       </div>
     </div>
   `;
+}
+
+async function loadDashboard() {
+  try {
+    const res = await fetch(`${API_BASE}/dashboard`);
+    const data = await res.json();
+
+    totalEvents.textContent = data.total_events ?? 0;
+    anomalies.textContent = data.anomalies_detected ?? 0;
+    patterns.textContent = data.ai_patterns_found ?? 0;
+    responseTime.textContent = data.avg_response_time ?? "0ms";
+  } catch (err) {
+    console.error("Dashboard backend not connected:", err);
+  }
 }
 
 analyzeSingleBtn.addEventListener("click", async () => {
@@ -113,6 +124,7 @@ analyzeSingleBtn.addEventListener("click", async () => {
 
     if (result.status === "success") {
       showResult(result.data);
+      loadDashboard();
     } else {
       showError(result.message || "Something went wrong.");
     }
@@ -136,11 +148,6 @@ analyzeBatchBtn.addEventListener("click", async () => {
     .map(line => line.trim())
     .filter(line => line);
 
-  if (logs.length === 0) {
-    showError("Please enter valid batch logs.");
-    return;
-  }
-
   showLoading("Analyzing batch logs...");
   toggleButtons(true);
 
@@ -156,7 +163,8 @@ analyzeBatchBtn.addEventListener("click", async () => {
     const result = await response.json();
 
     if (result.status === "success") {
-      showResult(result.data);
+      showResult(Array.isArray(result.data) ? result.data[0] : result.data);
+      loadDashboard();
     } else {
       showError(result.message || "Something went wrong.");
     }
@@ -177,4 +185,9 @@ clearBatchBtn.addEventListener("click", () => {
   showEmpty();
 });
 
+runAnalysisBtn.addEventListener("click", () => {
+  loadDashboard();
+});
+
 showEmpty();
+loadDashboard();
