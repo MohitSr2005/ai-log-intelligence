@@ -1,7 +1,199 @@
 log_text,label
-"Database connection refused on port 5432",database_error
-"JWT token expired for user request",auth_error
-"504 Gateway Timeout from nginx server",timeout_error
-"ModuleNotFoundError: No module named numpy",dependency_error
-"Environment variable SECRET_KEY missing",config_error
-"500 Internal Server Error at /login endpoint",api_error
+
+JWT token expired,auth_error
+Unauthorized access detected,auth_error
+Authentication failed for user admin,auth_error
+Access denied to protected resource,auth_error
+Invalid bearer token provided,auth_error
+OAuth authentication failed,auth_error
+Session token expired,auth_error
+Permission denied for requested action,auth_error
+Login failed due to invalid credentials,auth_error
+User not authorized to access resource,auth_error
+
+Database connection refused,database_error
+PostgreSQL server unavailable,database_error
+MySQL connection failed,database_error
+Unable to connect to database host,database_error
+Database connection pool exhausted,database_error
+SQL query execution failed,database_error
+Database transaction rollback failed,database_error
+Lost connection to database server,database_error
+MongoDB connection timeout,database_error
+Database authentication failed,database_error
+
+Request timed out after 30 seconds,timeout_error
+Gateway timeout occurred,timeout_error
+API response timeout exceeded,timeout_error
+Connection timeout while contacting service,timeout_error
+Operation aborted due to timeout,timeout_error
+Client request timed out,timeout_error
+External service timeout detected,timeout_error
+Timeout while fetching remote resource,timeout_error
+Network request exceeded timeout threshold,timeout_error
+Long-running process timed out,timeout_error
+
+500 Internal Server Error,server_error
+Server crashed unexpectedly,server_error
+Unhandled exception in backend,server_error
+Service unavailable due to backend failure,server_error
+Critical server failure detected,server_error
+Backend process terminated unexpectedly,server_error
+Application runtime exception occurred,server_error
+Server encountered unexpected condition,server_error
+Fatal server-side exception detected,server_error
+Microservice execution failed,server_error
+
+No module named sklearn,dependency_error
+ImportError while loading package,dependency_error
+Required dependency missing,dependency_error
+Package not found in environment,dependency_error
+Dependency conflict detected,dependency_error
+Failed to import required module,dependency_error
+Module resolution error occurred,dependency_error
+Missing package during startup,dependency_error
+Dependency installation incomplete,dependency_error
+Library unavailable at runtime,dependency_error
+
+Missing environment variable SECRET_KEY,config_error
+Configuration missing for database host,config_error
+Environment variable not found,config_error
+Invalid configuration detected,config_error
+Required config file missing,config_error
+Secret key not configured,config_error
+Config validation failed,config_error
+Database URL missing from configuration,config_error
+Application settings file not found,config_error
+Configuration parameter undefined,config_error
+
+Out of memory killed process,memory_error
+OOM detected on server,memory_error
+Memory allocation failed,memory_error
+Application exceeded memory limit,memory_error
+Container killed due to memory pressure,memory_error
+Heap space exhausted,memory_error
+System memory unavailable,memory_error
+Memory leak suspected,memory_error
+Runtime out of memory,memory_error
+Unable to allocate additional memory,memory_error
+
+API returned malformed response,api_error
+REST request failed unexpectedly,api_error
+Endpoint execution error occurred,api_error
+API gateway returned invalid payload,api_error
+Unexpected API exception detected,api_error
+API route processing failed,api_error
+Failed to process API request,api_error
+Invalid API response format,api_error
+Endpoint returned server-side error,api_error
+API transaction aborted unexpectedly,api_error
+
+Server started successfully,normal
+Application running successfully,normal
+Health check passed,normal
+Service started without errors,normal
+System operating normally,normal
+Application initialized successfully,normal
+Startup completed successfully,normal
+All systems operational,normal
+Monitoring check passed successfully,normal
+Server responding normally,normal
+
+Invalid login token received,auth_error
+User session validation failed,auth_error
+Expired access token used,auth_error
+Auth middleware rejected request,auth_error
+Invalid credentials submitted,auth_error
+User role permission missing,auth_error
+Refresh token invalid,auth_error
+Login blocked due to authorization failure,auth_error
+Secure endpoint access denied,auth_error
+Authentication service rejected user,auth_error
+
+Database query timeout,database_error
+DB host connection failed,database_error
+SQL transaction failed,database_error
+Database write operation failed,database_error
+Postgres connection refused,database_error
+MySQL authentication error,database_error
+Database lock wait timeout,database_error
+Unable to open database connection,database_error
+Database index query failed,database_error
+DB server returned connection error,database_error
+
+Socket timeout while reading response,timeout_error
+HTTP request timeout reached,timeout_error
+Remote service took too long,timeout_error
+Upstream service timeout,timeout_error
+Request cancelled after timeout,timeout_error
+API call exceeded time limit,timeout_error
+Read timeout from external service,timeout_error
+Connection timed out during upload,timeout_error
+Background job timed out,timeout_error
+Timeout waiting for database response,timeout_error
+
+Application server returned 500,server_error
+Backend crashed during request,server_error
+Fatal exception in server process,server_error
+Service crashed after deployment,server_error
+Runtime server failure,server_error
+Server failed to handle request,server_error
+Internal backend exception,server_error
+Worker process crashed unexpectedly,server_error
+Server unavailable due to crash,server_error
+Unhandled server-side error,server_error
+
+Missing Python dependency,dependency_error
+Required module unavailable,dependency_error
+Package import failed,dependency_error
+Library version conflict detected,dependency_error
+Dependency could not be resolved,dependency_error
+Module import failed at runtime,dependency_error
+Required package not installed,dependency_error
+Application failed due to missing library,dependency_error
+Pip dependency missing,dependency_error
+Runtime dependency error,dependency_error
+
+Missing config key,config_error
+Invalid environment configuration,config_error
+Config value is empty,config_error
+Application config not loaded,config_error
+Missing YAML configuration file,config_error
+Invalid config schema detected,config_error
+Environment file missing,config_error
+Required setting not provided,config_error
+Configuration load failed,config_error
+Invalid database configuration,config_error
+
+Process killed by OOM killer,memory_error
+Memory usage exceeded container limit,memory_error
+Insufficient memory available,memory_error
+Heap memory limit reached,memory_error
+Memory consumption too high,memory_error
+Application crashed due to memory exhaustion,memory_error
+Cannot allocate memory,memory_error
+Server memory pressure detected,memory_error
+High memory usage killed service,memory_error
+Memory overflow detected,memory_error
+
+API endpoint failed validation,api_error
+Invalid request handled by API,api_error
+API controller threw exception,api_error
+REST service returned bad response,api_error
+API failed to serialize response,api_error
+Endpoint returned unexpected status,api_error
+API gateway processing error,api_error
+Request handler returned invalid data,api_error
+API response body missing fields,api_error
+API service failed request,api_error
+
+Service boot completed normally,normal
+Application health is good,normal
+System check completed successfully,normal
+No anomalies detected,normal
+Scheduled task completed successfully,normal
+Log stream running normally,normal
+Backend service is healthy,normal
+Request processed successfully,normal
+System performance normal,normal
+All services running fine,normal

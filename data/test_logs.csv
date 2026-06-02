@@ -1,0 +1,10 @@
+log_text,expected_issue
+JWT token expired,auth_error
+Database connection refused,database_error
+Request timed out after 30 seconds,timeout_error
+500 Internal Server Error,server_error
+No module named sklearn,dependency_error
+Missing environment variable SECRET_KEY,config_error
+Out of memory killed process,memory_error
+API gateway returned invalid payload,api_error
+Server started successfully,normal
